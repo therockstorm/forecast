@@ -1,7 +1,10 @@
 .DS_Store
+scripts/*.js*
+stack.yml
 
 .idea/
 .serverless/
 .vscode/
 .webpack/
+cdk.out/
 node_modules/

@@ -3,12 +3,13 @@
   "version": "1.0.0",
   "scripts": {
     "build": "sls webpack",
+    "build:stack": "cd scripts && tsc && cdk synth my-stack --app 'node stack.js' --no-version-reporting --strict > stack.yml",
     "clean": "skripts src scripts --pattern '*.js'",
-    "deploy": "npm test && sls deploy --package .serverless/func.zip",
+    "deploy": "npm test && npm run build:stack && sls deploy",
     "format": "skripts prettier",
-    "invoke": "ENVIRONMENT=local sls invoke local --function func",
+    "invoke": "STAGE=local sls invoke local --function func",
     "lint": "skripts tslint",
-    "jest": "ENVIRONMENT=test skripts jest",
+    "jest": "STAGE=test skripts jest",
     "test": "npm run lint && npm run jest && sls package",
     "watch": "npm run jest -- --watch"
   },
@@ -25,7 +26,7 @@
     "serverless-plugin-aws-alerts": "^1.4.0",
     "serverless-plugin-canary-deployments": "^0.4.8",
     "serverless-pseudo-parameters": "^2.4.0",
-    "skripts": "0.0.22",
+    "skripts": "0.0.23",
     "tslint": "^5.20.0",
     "typescript": "^3.6.3"
   },

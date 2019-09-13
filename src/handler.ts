@@ -20,7 +20,7 @@ export const handle = async (evt: any): Promise<IRes> => {
     error(err)
   }
 
-  return { statusCode: 200, body: JSON.stringify(evt) }
+  return { statusCode: 201, body: JSON.stringify(evt) }
 }
 
 const getParams = async (): Promise<IParams> => {

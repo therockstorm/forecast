@@ -1,0 +1,8 @@
+{
+  "extends": "../node_modules/skripts/base-tsconfig.json",
+  "compilerOptions": {
+    "lib": ["es2016", "es2017.object", "es2017.string"],
+    "module": "commonjs"
+  },
+  "exclude": ["cdk.out"]
+}

@@ -6,7 +6,6 @@ const cd = new CodeDeploy()
 
 export const pre = async (evt: any): Promise<IRes> => {
   log(JSON.stringify(evt))
-
   log("TODO: Health check before shifting traffic...")
 
   await putStatus(evt.DeploymentId, evt.LifecycleEventHookExecutionId)
@@ -15,7 +14,6 @@ export const pre = async (evt: any): Promise<IRes> => {
 
 export const post = async (evt: any): Promise<IRes> => {
   log(JSON.stringify(evt))
-
   log("TODO: Health check after shifting traffic...")
 
   await putStatus(evt.DeploymentId, evt.LifecycleEventHookExecutionId)
