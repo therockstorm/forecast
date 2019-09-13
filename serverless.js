@@ -2,15 +2,35 @@ const { serverless } = require("skripts/config")
 
 module.exports = {
   ...serverless,
-  // app: "forecast",
+  custom: {
+    ...serverless.custom,
+    alerts: { dashboard: false },
+    deploymentSettings: { stages: ["dev", "prod"] }
+  },
+  app: "forecast",
   functions: {
     func: {
-      handler: "src/handler.handle",
-      events: [{ schedule: "cron(0 11 * * ? *)" }]
-    }
+      alarms: ["functionErrors"],
+      deploymentSettings: {
+        type: "AllAtOnce", // Change for gradual deploy, see https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/automating-updates-to-serverless-apps.html
+        alias: "Live",
+        preTrafficHook: "preHook",
+        postTrafficHook: "postHook",
+        alarms: ["FuncFunctionErrorsAlarm"]
+      },
+      events: [{ schedule: "cron(0 11 * * ? *)" }],
+      handler: "src/handler.handle"
+    },
+    postHook: { handler: "src/hooks.post" },
+    preHook: { handler: "src/hooks.pre" }
   },
   org: "therockstorm",
-  plugins: [...serverless.plugins, "serverless-pseudo-parameters"],
+  plugins: [
+    ...serverless.plugins,
+    "serverless-plugin-aws-alerts",
+    "serverless-plugin-canary-deployments",
+    "serverless-pseudo-parameters"
+  ],
   provider: {
     ...serverless.provider,
     environment: {
@@ -25,6 +45,10 @@ module.exports = {
       Effect: "Allow",
       Action: "ses:SendEmail",
       Resource: "arn:aws:ses:${self:provider.region}:#{AWS::AccountId}:identity/${env:FORECAST_EMAIL}"
+    }, {
+      Effect: "Allow",
+      Action: "codedeploy:PutLifecycleEventHookExecutionStatus",
+      Resource: "arn:aws:codedeploy:${self:provider.region}:#{AWS::AccountId}:deploymentgroup:${self:service.name}-${self:provider.stage}-*"
     }],
     tracing: { apiGateway: true, lambda: true }
   }

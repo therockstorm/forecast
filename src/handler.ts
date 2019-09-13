@@ -11,9 +11,7 @@ const ses = new SES()
 const timeZone = envVar("FORECAST_TIMEZONE")
 const units = "imperial"
 
-export const handle = async (
-  evt: any
-): Promise<{ statusCode: number; body: string }> => {
+export const handle = async (evt: any): Promise<IRes> => {
   log(JSON.stringify(evt))
 
   try {

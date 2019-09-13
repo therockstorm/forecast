@@ -4,7 +4,7 @@
   "scripts": {
     "build": "sls webpack",
     "clean": "skripts src scripts --pattern '*.js'",
-    "deploy": "npm test && sls deploy",
+    "deploy": "npm test && sls deploy --package .serverless/func.zip",
     "format": "skripts prettier",
     "invoke": "ENVIRONMENT=local sls invoke local --function func",
     "lint": "skripts tslint",
@@ -18,8 +18,12 @@
     "source-map-support": "^0.5.13"
   },
   "devDependencies": {
+    "@aws-cdk/aws-codebuild": "^1.8.0",
+    "@aws-cdk/core": "^1.8.0",
     "aws-sdk": "^2.528.0",
     "husky": "^3.0.5",
+    "serverless-plugin-aws-alerts": "^1.4.0",
+    "serverless-plugin-canary-deployments": "^0.4.8",
     "serverless-pseudo-parameters": "^2.4.0",
     "skripts": "0.0.22",
     "tslint": "^5.20.0",

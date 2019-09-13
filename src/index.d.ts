@@ -37,3 +37,8 @@ interface IMessage {
   body: string
   subject: string
 }
+
+interface IRes {
+  statusCode: number
+  body: string
+}

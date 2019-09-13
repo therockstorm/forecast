@@ -1,0 +1,5 @@
+# For instructional purposes only
+# Serverless only supports HTTP endpoints so `sls test` will fail
+- name: returns 200 on success
+  endpoint: { function: func }
+  response: { status: 200 }
