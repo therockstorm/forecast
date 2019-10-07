@@ -19,7 +19,8 @@ module.exports = {
         alarms: ["FuncFunctionErrorsAlarm"]
       },
       events: [{ schedule: "cron(0 11 * * ? *)" }],
-      handler: "src/handler.handle"
+      handler: "src/handler.handle",
+      timeout: 20
     },
     postHook: { handler: "src/hooks.post" },
     preHook: { handler: "src/hooks.pre" }

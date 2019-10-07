@@ -9,7 +9,6 @@ class MyStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props)
 
-    // tslint:disable-next-line
     new Project(this, `${name}-codebuild-${STAGE}`, {
       badge: true,
       buildSpec: BuildSpec.fromObject({
@@ -26,18 +25,19 @@ class MyStack extends Stack {
           FORECAST_LAT: { value: envVar("FORECAST_LAT") },
           FORECAST_LON: { value: envVar("FORECAST_LON") },
           FORECAST_TIMEZONE: { value: envVar("FORECAST_TIMEZONE") },
-          OPEN_WEATHER_MAP_API_KEY: { value: envVar("OPEN_WEATHER_MAP_API_KEY") },
-          SERVERLESS_ACCESS_KEY: { value: envVar("SERVERLESS_ACCESS_KEY") } ,
+          OPEN_WEATHER_MAP_API_KEY: {
+            value: envVar("OPEN_WEATHER_MAP_API_KEY")
+          },
+          SERVERLESS_ACCESS_KEY: { value: envVar("SERVERLESS_ACCESS_KEY") },
           STAGE: { value: STAGE }
         }
       },
-      source: Source.gitHub({ owner: 'therockstorm', repo: name }),
+      source: Source.gitHub({ owner: "therockstorm", repo: name }),
       timeout: Duration.minutes(5)
     })
   }
 }
 
 const app = new App()
-// tslint:disable-next-line
 new MyStack(app, "my-stack")
 app.synth()

@@ -1,5 +1,5 @@
 import { envVar, error, log } from "@therockstorm/utils"
-import SES from "aws-sdk/clients/ses"
+import SES, { SendEmailResponse } from "aws-sdk/clients/ses"
 import axios from "axios"
 import "source-map-support/register"
 
@@ -11,7 +11,7 @@ const ses = new SES()
 const timeZone = envVar("FORECAST_TIMEZONE")
 const units = "imperial"
 
-export const handle = async (evt: any): Promise<IRes> => {
+export const handle = async (evt: {}): Promise<Res> => {
   log(JSON.stringify(evt))
 
   try {
@@ -23,17 +23,17 @@ export const handle = async (evt: any): Promise<IRes> => {
   return { statusCode: 201, body: JSON.stringify(evt) }
 }
 
-const getParams = async (): Promise<IParams> => {
+const getParams = async (): Promise<Params> => {
   const owmUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=${units}&appid=${apiKey}`
   const [current, meta] = await Promise.all([
-    get<ICurrent>(owmUrl),
-    get<IMeta>(`https://api.weather.gov/points/${lat},${lon}`)
+    get<Current>(owmUrl),
+    get<Meta>(`https://api.weather.gov/points/${lat},${lon}`)
   ])
 
   return {
-    forecast: (await get<IWeekly>(meta.properties.forecast)).properties.periods
-      .filter(p => !p.name.endsWith(" Night"))
-      .slice(0, 5)
+    forecast: (await get<Weekly>(meta.properties.forecast)).properties.periods
+      .filter(p => !p.name.endsWith(" Night") && !p.name.endsWith("Overnight"))
+      .slice(0, 6)
       .map(p => `${p.name}: ${p.detailedForecast}`)
       .join("\n"),
     humidity: current.main.humidity,
@@ -44,16 +44,16 @@ const getParams = async (): Promise<IParams> => {
   }
 }
 
-const getMsg = (params: IParams): IMessage => ({
+const getMsg = (params: Params): Message => ({
   body:
-    `Good morning! ` +
+    `Good day! ` +
     `It's currently ${params.temp}° with ${params.humidity}% humidity and ${params.wind} mph winds. ` +
     `The sun rises at ${params.sunrise} and sets at ${params.sunset}.` +
     `\n\n${params.forecast}`,
   subject: "Daily Forecast"
 })
 
-const send = async (msg: IMessage) =>
+const send = async (msg: Message): Promise<SendEmailResponse> =>
   ses
     .sendEmail({
       Destination: { ToAddresses: [emailAddress] },
@@ -69,7 +69,7 @@ async function get<T>(url: string): Promise<T> {
   return (await axios.get<T>(url)).data
 }
 
-const time = (epoch: number) => {
+const time = (epoch: number): string => {
   const zero = new Date(0)
   zero.setUTCSeconds(epoch)
   const timeAmPm = zero

@@ -1,12 +1,11 @@
 # forecast
 
-Your local forecast delivered via email each morning. It's purposefully overbuilt. I use it as a reference project for things like,
+Your local forecast delivered via email each morning.
 
-- Serverless Framework [Dashboard](https://serverless.com/framework/docs/dashboard/) and [Integration Testing](https://github.com/serverless/enterprise/blob/master/docs/testing.md)
-- [AWS CDK](https://docs.aws.amazon.com/cdk/latest/guide/home.html)
-- [AWS CodeBuild](https://aws.amazon.com/codebuild/)
-- [AWS CodeDeploy](https://aws.amazon.com/codedeploy/) with [traffic shifting and blue/green deploys](https://github.com/davidgf/serverless-plugin-canary-deployments)
-- [CloudWatch Alerts](https://github.com/ACloudGuru/serverless-plugin-aws-alerts)
+This project is intentionally overbuilt. I'm using it as a reference project for things like,
+
+- Serverless Framework [Dashboard](https://serverless.com/framework/docs/dashboard/), [Integration Testing](https://github.com/serverless/enterprise/blob/master/docs/testing.md), and integration with [AWS CDK](https://docs.aws.amazon.com/cdk/latest/guide/home.html)
+- [AWS CodeBuild](https://aws.amazon.com/codebuild/) and [CodeDeploy](https://aws.amazon.com/codedeploy/) with [traffic shifting and blue/green deploys](https://github.com/davidgf/serverless-plugin-canary-deployments)
 - [Amazon EventBridge](https://aws.amazon.com/eventbridge/)
 - [Cheaply and securely storing API keys](https://medium.com/better-programming/how-to-store-your-aws-lambda-secrets-cheaply-without-compromising-scalability-or-security-d3e8a250f12c)
 

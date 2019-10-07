@@ -1,18 +1,18 @@
-interface ICurrent {
+interface Current {
   main: { temp: number; humidity: number }
   sys: { sunrise: number; sunset: number }
   weather: Array<{ icon: string }>
   wind: { speed: number }
 }
 
-interface IMeta {
+interface Meta {
   properties: {
     forecast: string
     forecastHourly: string
   }
 }
 
-interface IWeekly {
+interface Weekly {
   properties: {
     periods: Array<{
       name: string
@@ -24,7 +24,7 @@ interface IWeekly {
   }
 }
 
-interface IParams {
+interface Params {
   forecast: string
   humidity: number
   sunrise: string
@@ -33,12 +33,12 @@ interface IParams {
   wind: string
 }
 
-interface IMessage {
+interface Message {
   body: string
   subject: string
 }
 
-interface IRes {
+interface Res {
   statusCode: number
   body: string
 }
