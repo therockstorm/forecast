@@ -29,8 +29,7 @@ module.exports = {
   plugins: [
     ...serverless.plugins,
     "serverless-plugin-aws-alerts",
-    "serverless-plugin-canary-deployments",
-    "serverless-pseudo-parameters"
+    "serverless-plugin-canary-deployments"
   ],
   provider: {
     ...serverless.provider,
