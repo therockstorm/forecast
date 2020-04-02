@@ -12,7 +12,8 @@ import {
 
 export const run = async (deps: Deps): Promise<void> => {
   const msg = getMsg(await getWeather(deps), deps.messaging)
-  deps.messaging.services.map(s => s.send(msg)).forEach(log)
+  const res = await Promise.all(deps.messaging.services.map(s => s.send(msg)))
+  res.forEach(log)
 }
 
 const getWeather = async (deps: Deps): Promise<Params> => {
@@ -48,7 +49,8 @@ const getMsg = (params: Params, deps: MessagingDeps): Message => ({
     `\n\n${params.forecast}`,
   email: deps.email,
   subject: "Daily Forecast",
-  phone: deps.phone
+  phoneFrom: deps.phoneFrom,
+  phoneTo: deps.phoneTo
 })
 
 const formatTime = (epoch: number, timeZone: string): string => {

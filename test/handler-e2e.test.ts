@@ -36,7 +36,8 @@ describe("handle", () => {
       body:
         "Good day! It's currently 1° with 2% humidity and 5 mph winds. The sun rises at 5:00 pm and sets at 5:00 pm.\n\nmy-name: my-detailedForecast\nmy-name: my-detailedForecast\nmy-name: my-detailedForecast\nmy-name: my-detailedForecast\nmy-name: my-detailedForecast\nmy-name: my-detailedForecast",
       email: "my-email",
-      phone: "my-phone",
+      phoneFrom: "my-phoneFrom",
+      phoneTo: "my-phoneTo",
       subject: "Daily Forecast"
     })
   })

@@ -10,7 +10,8 @@ import {
 export const msg = {
   body: "my-message",
   email: "my-email",
-  phone: "my-phone",
+  phoneFrom: "my-phoneFrom",
+  phoneTo: "my-phoneTo",
   subject: "my-subject"
 }
 
@@ -23,7 +24,8 @@ export const deps: Deps = {
   http: (mocks.http as unknown) as RemoteService,
   messaging: {
     email: "my-email",
-    phone: "my-phone",
+    phoneFrom: "my-phoneFrom",
+    phoneTo: "my-phoneTo",
     services: (mocks.services as unknown) as MessagingService[]
   },
   weather: {

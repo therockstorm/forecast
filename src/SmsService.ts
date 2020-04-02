@@ -12,8 +12,8 @@ export class SmsService implements MessagingService {
     (
       await this.twilio.messages.create({
         body: msg.body,
-        to: msg.phone,
-        from: msg.phone
+        from: msg.phoneFrom,
+        to: msg.phoneTo
       })
     ).sid
 }

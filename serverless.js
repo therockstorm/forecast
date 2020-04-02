@@ -14,8 +14,6 @@ module.exports = {
       deploymentSettings: {
         type: "AllAtOnce", // Change for gradual deploy, see https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/automating-updates-to-serverless-apps.html
         alias: "Live",
-        preTrafficHook: "preHook",
-        postTrafficHook: "postHook",
         alarms: ["FuncFunctionErrorsAlarm"]
       },
       events: [{ schedule: "cron(0 11 * * ? *)" }],
@@ -34,7 +32,8 @@ module.exports = {
     environment: {
       ...serverless.provider.environment,
       FORECAST_EMAIL: "${env:FORECAST_EMAIL}",
-      FORECAST_PHONE_NUMBER: "${env:FORECAST_PHONE_NUMBER}",
+      FORECAST_PHONE_NUMBER_FROM: "${env:FORECAST_PHONE_NUMBER_FROM}",
+      FORECAST_PHONE_NUMBER_TO: "${env:FORECAST_PHONE_NUMBER_TO}",
       FORECAST_LAT: "${env:FORECAST_LAT}",
       FORECAST_LON: "${env:FORECAST_LON}",
       FORECAST_TIMEZONE: "${env:FORECAST_TIMEZONE}",

@@ -7,7 +7,8 @@ export interface Current {
 
 export interface MessagingDeps {
   email: string
-  phone: string
+  phoneFrom: string
+  phoneTo: string
   services: MessagingService[]
 }
 
@@ -64,7 +65,8 @@ export interface Params {
 export interface Message {
   body: string
   email: string
-  phone: string
+  phoneFrom: string
+  phoneTo: string
   subject: string
 }
 

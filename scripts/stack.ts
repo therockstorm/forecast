@@ -20,9 +20,16 @@ class MyStack extends Stack {
       }),
       environment: {
         environmentVariables: {
-          DEPLOYMENT_BUCKET: { value: envVar("DEPLOYMENT_BUCKET") },
+          SKRIPTS_DEPLOYMENT_BUCKET: {
+            value: envVar("SKRIPTS_DEPLOYMENT_BUCKET")
+          },
           FORECAST_EMAIL: { value: envVar("FORECAST_EMAIL") },
-          FORECAST_PHONE_NUMBER: { value: envVar("FORECAST_PHONE_NUMBER") },
+          FORECAST_PHONE_NUMBER_FROM: {
+            value: envVar("FORECAST_PHONE_NUMBER_FROM")
+          },
+          FORECAST_PHONE_NUMBER_TO: {
+            value: envVar("FORECAST_PHONE_NUMBER_TO")
+          },
           FORECAST_LAT: { value: envVar("FORECAST_LAT") },
           FORECAST_LON: { value: envVar("FORECAST_LON") },
           FORECAST_TIMEZONE: { value: envVar("FORECAST_TIMEZONE") },

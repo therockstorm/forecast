@@ -13,7 +13,8 @@ export const init = (): Deps => ({
   http: new HttpService(axios.create()),
   messaging: {
     email: envVar("FORECAST_EMAIL"),
-    phone: envVar("FORECAST_PHONE_NUMBER"),
+    phoneFrom: envVar("FORECAST_PHONE_NUMBER_FROM"),
+    phoneTo: envVar("FORECAST_PHONE_NUMBER_TO"),
     services: [
       new EmailService(new SES()),
       new SmsService(
