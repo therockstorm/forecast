@@ -1,81 +1,17 @@
-import { envVar, error, log } from "@therockstorm/utils"
-import SES, { SendEmailResponse } from "aws-sdk/clients/ses"
-import axios from "axios"
+import { error } from "@therockstorm/utils"
 import "source-map-support/register"
+import { init } from "./deps"
+import { run } from "./app"
+import { Res } from "../types"
 
-const apiKey = envVar("OPEN_WEATHER_MAP_API_KEY")
-const emailAddress = envVar("FORECAST_EMAIL")
-const lat = envVar("FORECAST_LAT")
-const lon = envVar("FORECAST_LON")
-const ses = new SES()
-const timeZone = envVar("FORECAST_TIMEZONE")
-const units = "imperial"
+const deps = init()
 
-export const handle = async (evt: {}): Promise<Res> => {
-  log(JSON.stringify(evt))
-
+export const handle = async (): Promise<Res> => {
   try {
-    log(await send(getMsg(await getParams())))
+    await run(deps)
+    return { statusCode: 200 }
   } catch (err) {
     error(err)
+    return { statusCode: 500 }
   }
-
-  return { statusCode: 201, body: JSON.stringify(evt) }
-}
-
-const getParams = async (): Promise<Params> => {
-  const owmUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=${units}&appid=${apiKey}`
-  const [current, meta] = await Promise.all([
-    get<Current>(owmUrl),
-    get<Meta>(`https://api.weather.gov/points/${lat},${lon}`)
-  ])
-
-  return {
-    forecast: (await get<Weekly>(meta.properties.forecast)).properties.periods
-      .filter(p => !p.name.endsWith(" Night") && !p.name.endsWith("Overnight"))
-      .slice(0, 6)
-      .map(p => `${p.name}: ${p.detailedForecast}`)
-      .join("\n"),
-    humidity: current.main.humidity,
-    sunrise: time(current.sys.sunrise),
-    sunset: time(current.sys.sunset),
-    temp: current.main.temp.toFixed(0),
-    wind: current.wind.speed.toFixed(0)
-  }
-}
-
-const getMsg = (params: Params): Message => ({
-  body:
-    `Good day! ` +
-    `It's currently ${params.temp}° with ${params.humidity}% humidity and ${params.wind} mph winds. ` +
-    `The sun rises at ${params.sunrise} and sets at ${params.sunset}.` +
-    `\n\n${params.forecast}`,
-  subject: "Daily Forecast"
-})
-
-const send = async (msg: Message): Promise<SendEmailResponse> =>
-  ses
-    .sendEmail({
-      Destination: { ToAddresses: [emailAddress] },
-      Message: {
-        Body: { Text: { Data: msg.body } },
-        Subject: { Charset: "UTF-8", Data: msg.subject }
-      },
-      Source: emailAddress
-    })
-    .promise()
-
-async function get<T>(url: string): Promise<T> {
-  return (await axios.get<T>(url)).data
-}
-
-const time = (epoch: number): string => {
-  const zero = new Date(0)
-  zero.setUTCSeconds(epoch)
-  const timeAmPm = zero
-    .toLocaleString("en-US", { timeZone })
-    .split(", ")[1]
-    .split(" ")
-  const timeParts = timeAmPm[0].split(":")
-  return `${timeParts[0]}:${timeParts[1]} ${timeAmPm[1].toLowerCase()}`
 }

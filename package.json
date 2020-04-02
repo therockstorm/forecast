@@ -9,21 +9,24 @@
     "deploy": "npm run build:stack && sls deploy",
     "format": "skripts format",
     "invoke": "STAGE=local sls invoke local --function func",
-    "lint": "skripts lint",
-    "test": "skripts test"
+    "lint": "skripts lint --fix",
+    "test": "skripts test --coverage"
   },
   "dependencies": {
-    "@therockstorm/utils": "^3.0.17",
-    "aws-sdk": "^2.640.0",
+    "@therockstorm/utils": "^3.0.18",
+    "aws-sdk": "^2.651.0",
     "axios": "^0.19.2",
-    "source-map-support": "^0.5.16"
+    "source-map-support": "^0.5.16",
+    "twilio": "^3.42.0"
   },
   "devDependencies": {
-    "@aws-cdk/aws-codebuild": "^1.28.0",
-    "@aws-cdk/core": "^1.28.0",
-    "aws-cdk": "^1.28.0",
+    "@aws-cdk/aws-codebuild": "^1.31.0",
+    "@aws-cdk/core": "^1.31.0",
+    "@types/jest-when": "^2.7.0",
+    "aws-cdk": "^1.31.0",
     "eslint": "^6.8.0",
     "husky": "^4.2.3",
+    "jest-when": "^2.7.1",
     "serverless-plugin-aws-alerts": "^1.4.0",
     "serverless-plugin-canary-deployments": "^0.4.8",
     "skripts": "0.5.0",

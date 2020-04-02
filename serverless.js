@@ -21,9 +21,7 @@ module.exports = {
       events: [{ schedule: "cron(0 11 * * ? *)" }],
       handler: "src/handler.handle",
       timeout: 20
-    },
-    postHook: { handler: "src/hooks.post" },
-    preHook: { handler: "src/hooks.pre" }
+    }
   },
   org: "therockstorm",
   plugins: [
@@ -36,10 +34,13 @@ module.exports = {
     environment: {
       ...serverless.provider.environment,
       FORECAST_EMAIL: "${env:FORECAST_EMAIL}",
+      FORECAST_PHONE_NUMBER: "${env:FORECAST_PHONE_NUMBER}",
       FORECAST_LAT: "${env:FORECAST_LAT}",
       FORECAST_LON: "${env:FORECAST_LON}",
       FORECAST_TIMEZONE: "${env:FORECAST_TIMEZONE}",
-      OPEN_WEATHER_MAP_API_KEY: "${env:OPEN_WEATHER_MAP_API_KEY}"
+      OPEN_WEATHER_MAP_API_KEY: "${env:OPEN_WEATHER_MAP_API_KEY}",
+      TWILIO_ACCOUNT_SID: "${env:TWILIO_ACCOUNT_SID}",
+      TWILIO_AUTH_TOKEN: "${env:TWILIO_AUTH_TOKEN}"
     },
     iamRoleStatements: [
       {

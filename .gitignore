@@ -7,4 +7,5 @@ stack.yml
 .vscode/
 .webpack/
 cdk.out/
+coverage/
 node_modules/
