@@ -1,7 +1,7 @@
-import { Message, MessagingService } from "../types"
+import { Message, MessageSender } from "./deps"
 import SES from "aws-sdk/clients/ses"
 
-export class EmailService implements MessagingService {
+export class EmailSender implements MessageSender {
   private ses: SES
 
   constructor(ses: SES) {

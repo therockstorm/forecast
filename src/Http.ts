@@ -1,7 +1,7 @@
 import { AxiosInstance } from "axios"
-import { RemoteService } from "../types"
+import { Fetcher } from "./deps"
 
-export class HttpService implements RemoteService {
+export class Http implements Fetcher {
   private axios: AxiosInstance
 
   constructor(axios: AxiosInstance) {

@@ -2,11 +2,10 @@ import { error } from "@therockstorm/utils"
 import "source-map-support/register"
 import { init } from "./deps"
 import { run } from "./app"
-import { Res } from "../types"
 
 const deps = init()
 
-export const handle = async (): Promise<Res> => {
+export const handle = async (): Promise<Response> => {
   try {
     await run(deps)
     return { statusCode: 200 }
@@ -14,4 +13,8 @@ export const handle = async (): Promise<Res> => {
     error(err)
     return { statusCode: 500 }
   }
+}
+
+interface Response {
+  statusCode: number
 }

@@ -1,11 +1,11 @@
 import {
-  Current,
   Deps,
-  Meta,
-  MessagingService,
-  RemoteService,
-  Weekly
-} from "../types"
+  GetWeatherReq,
+  GetWeatherRes,
+  MessageSender,
+  WeatherService
+} from "../src/deps"
+import { Current, Meta, Weekly } from "../src/OpenWeatherMap"
 
 export const msg = {
   body: "my-message",
@@ -16,17 +16,16 @@ export const msg = {
 }
 
 export const mocks = {
-  http: { get: jest.fn() },
-  services: [{ send: jest.fn() }]
+  senders: [{ send: jest.fn() }],
+  weatherService: { get: jest.fn() }
 }
 
 export const deps: Deps = {
-  http: (mocks.http as unknown) as RemoteService,
   messaging: {
     email: "my-email",
     phoneFrom: "my-phoneFrom",
     phoneTo: "my-phoneTo",
-    services: (mocks.services as unknown) as MessagingService[]
+    senders: (mocks.senders as unknown) as MessageSender[]
   },
   weather: {
     apiKey: "my-apiKey",
@@ -34,7 +33,25 @@ export const deps: Deps = {
     lon: "my-lon",
     timeZone: "America/Denver",
     units: "metric"
-  }
+  },
+  weatherService: (mocks.weatherService as unknown) as WeatherService
+}
+
+export const getWeatherReq: GetWeatherReq = {
+  apiKey: "my-apiKey",
+  lat: "my-lat",
+  lon: "my-lon",
+  timeZone: "America/Denver",
+  units: "metric"
+}
+
+export const getWeatherRes: GetWeatherRes = {
+  forecast: "my-forecast",
+  humidity: 1,
+  sunrise: "my-sunrise",
+  sunset: "my-sunset",
+  temp: "my-temp",
+  wind: "my-wind"
 }
 
 export const current: Current = {

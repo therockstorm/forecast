@@ -1,5 +1,5 @@
 import SES from "aws-sdk/clients/ses"
-import { EmailService } from "../src/EmailService"
+import { EmailSender } from "../src/EmailSender"
 import { msg } from "./fakes"
 
 describe("send", () => {
@@ -7,7 +7,7 @@ describe("send", () => {
     const exp = "my-messageId"
     const mock = { sendEmail: jest.fn() }
     mock.sendEmail.mockReturnValue({ promise: () => ({ MessageId: exp }) })
-    const srv = new EmailService((mock as unknown) as SES)
+    const srv = new EmailSender((mock as unknown) as SES)
 
     const act = await srv.send(msg)
 

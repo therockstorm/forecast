@@ -1,13 +1,13 @@
 import { Twilio } from "twilio"
-import { SmsService } from "../src/SmsService"
+import { SmsSender } from "../src/SmsSender"
 import { msg } from "./fakes"
 
 describe("send", () => {
   it("sends sms", async () => {
     const exp = "my-sid"
     const mock = { messages: { create: jest.fn() } }
+    const srv = new SmsSender((mock as unknown) as Twilio)
     mock.messages.create.mockReturnValue({ sid: exp })
-    const srv = new SmsService((mock as unknown) as Twilio)
 
     const act = await srv.send(msg)
 

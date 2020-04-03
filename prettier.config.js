@@ -1,1 +1,1 @@
-module.exports = require("skripts/config").prettier
+module.exports = { arrowParens: "avoid", semi: false, trailingComma: "none" }

@@ -1,7 +1,7 @@
-import { Message, MessagingService } from "../types"
+import { Message, MessageSender } from "./deps"
 import { Twilio } from "twilio"
 
-export class SmsService implements MessagingService {
+export class SmsSender implements MessageSender {
   private twilio: Twilio
 
   constructor(twilio: Twilio) {

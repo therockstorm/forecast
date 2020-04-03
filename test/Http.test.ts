@@ -1,13 +1,13 @@
 import { AxiosInstance } from "axios"
-import { HttpService } from "../src/HttpService"
+import { Http } from "../src/Http"
 
 describe("send", () => {
   it("sends email", async () => {
+    const url = "my-url"
     const exp = "my-name"
     const mock = { get: jest.fn() }
+    const srv = new Http((mock as unknown) as AxiosInstance)
     mock.get.mockReturnValue({ data: exp })
-    const srv = new HttpService((mock as unknown) as AxiosInstance)
-    const url = "my-url"
 
     const act = await srv.get(url)
 
