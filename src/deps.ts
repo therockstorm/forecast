@@ -33,7 +33,7 @@ export const init = (): Deps => ({
 
 // Service interfaces owned by business logic, implemented by plugins
 export interface MessageSender {
-  send: (msg: Message) => Promise<string>
+  send: (msg: SendMessageReq) => Promise<SendMessageRes>
 }
 
 export interface WeatherService {
@@ -45,7 +45,7 @@ export interface Fetcher {
 }
 
 // Domain objects
-export interface Message {
+export interface SendMessageReq {
   body: string
   email: string
   phoneFrom: string
@@ -53,11 +53,8 @@ export interface Message {
   subject: string
 }
 
-export interface Messaging {
-  email: string
-  phoneFrom: string
-  phoneTo: string
-  senders: MessageSender[]
+export interface SendMessageRes {
+  id: string
 }
 
 export interface GetWeatherReq {
@@ -75,6 +72,13 @@ export interface GetWeatherRes {
   sunset: string
   temp: string
   wind: string
+}
+
+export interface Messaging {
+  email: string
+  phoneFrom: string
+  phoneTo: string
+  senders: MessageSender[]
 }
 
 export interface Deps {

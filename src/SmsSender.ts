@@ -1,4 +1,4 @@
-import { Message, MessageSender } from "./deps"
+import { SendMessageReq, SendMessageRes, MessageSender } from "./deps"
 import { Twilio } from "twilio"
 
 export class SmsSender implements MessageSender {
@@ -8,12 +8,13 @@ export class SmsSender implements MessageSender {
     this.twilio = twilio
   }
 
-  send = async (msg: Message): Promise<string> =>
-    (
+  send = async (req: SendMessageReq): Promise<SendMessageRes> => ({
+    id: (
       await this.twilio.messages.create({
-        body: msg.body,
-        from: msg.phoneFrom,
-        to: msg.phoneTo
+        body: req.body,
+        from: req.phoneFrom,
+        to: req.phoneTo
       })
     ).sid
+  })
 }

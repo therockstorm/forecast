@@ -32,7 +32,7 @@ export class OpenWeatherMap implements WeatherService {
     }
   }
 
-  formatTime = (epoch: number, timeZone: string): string => {
+  private formatTime = (epoch: number, timeZone: string): string => {
     const zero = new Date(0)
     zero.setUTCSeconds(epoch)
     const timeAmPm = zero

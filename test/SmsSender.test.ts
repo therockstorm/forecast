@@ -11,7 +11,7 @@ describe("send", () => {
 
     const act = await srv.send(msg)
 
-    expect(act).toEqual(exp)
+    expect(act).toEqual({ id: exp })
     expect(mock.messages.create).toHaveBeenCalledWith({
       body: msg.body,
       from: msg.phoneFrom,

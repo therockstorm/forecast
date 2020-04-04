@@ -1,4 +1,4 @@
-import { Message, MessageSender } from "./deps"
+import { SendMessageReq, SendMessageRes, MessageSender } from "./deps"
 import SES from "aws-sdk/clients/ses"
 
 export class EmailSender implements MessageSender {
@@ -8,17 +8,18 @@ export class EmailSender implements MessageSender {
     this.ses = ses
   }
 
-  send = async (msg: Message): Promise<string> =>
-    (
+  send = async (req: SendMessageReq): Promise<SendMessageRes> => ({
+    id: (
       await this.ses
         .sendEmail({
-          Destination: { ToAddresses: [msg.email] },
+          Destination: { ToAddresses: [req.email] },
           Message: {
-            Body: { Text: { Data: msg.body } },
-            Subject: { Charset: "UTF-8", Data: msg.subject }
+            Body: { Text: { Data: req.body } },
+            Subject: { Charset: "UTF-8", Data: req.subject }
           },
-          Source: msg.email
+          Source: req.email
         })
         .promise()
     ).MessageId
+  })
 }
