@@ -7,7 +7,7 @@ export const run = async (deps: Deps): Promise<void> => {
     await deps.weatherService.get(deps.weather),
     deps.messaging
   )
-  const res = await Promise.all(deps.messaging.senders.map(s => s.send(msg)))
+  const res = await Promise.all(deps.messaging.senders.map((s) => s.send(msg)))
   res.forEach(log)
 }
 
@@ -20,5 +20,5 @@ const getMsg = (params: GetWeatherRes, deps: Messaging): SendMessageReq => ({
   email: deps.email,
   subject: "Daily Forecast",
   phoneFrom: deps.phoneFrom,
-  phoneTo: deps.phoneTo
+  phoneTo: deps.phoneTo,
 })

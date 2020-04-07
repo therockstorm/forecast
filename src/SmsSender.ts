@@ -13,8 +13,8 @@ export class SmsSender implements MessageSender {
       await this.twilio.messages.create({
         body: req.body,
         from: req.phoneFrom,
-        to: req.phoneTo
+        to: req.phoneTo,
       })
-    ).sid
+    ).sid,
   })
 }

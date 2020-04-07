@@ -30,7 +30,7 @@ describe("get", () => {
       sunrise: "5:00 pm",
       sunset: "5:00 pm",
       temp: "1",
-      wind: "5"
+      wind: "5",
     })
   })
 })

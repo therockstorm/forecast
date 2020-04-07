@@ -9,7 +9,7 @@ import { handle } from "../src/handler"
 describe("handle", () => {
   afterEach(() => {
     resetAllWhenMocks()
-    mocks.senders.forEach(s => s.send.mockReset())
+    mocks.senders.forEach((s) => s.send.mockReset())
     mocks.weatherService.get.mockReset()
   })
 
@@ -17,7 +17,7 @@ describe("handle", () => {
     when(mocks.weatherService.get)
       .calledWith(deps.weather)
       .mockResolvedValue(getWeatherRes)
-    mocks.senders.forEach(s => s.send.mockResolvedValue(""))
+    mocks.senders.forEach((s) => s.send.mockResolvedValue(""))
 
     const res = await handle()
 
@@ -28,7 +28,7 @@ describe("handle", () => {
       email: "my-email",
       phoneFrom: "my-phoneFrom",
       phoneTo: "my-phoneTo",
-      subject: "Daily Forecast"
+      subject: "Daily Forecast",
     })
   })
 

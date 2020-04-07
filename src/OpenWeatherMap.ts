@@ -13,13 +13,15 @@ export class OpenWeatherMap implements WeatherService {
       this.fetcher.get<Current>(owmUrl),
       this.fetcher.get<Meta>(
         `https://api.weather.gov/points/${req.lat},${req.lon}`
-      )
+      ),
     ])
     const weekly = await this.fetcher.get<Weekly>(meta.properties.forecast)
     const forecast = weekly.properties.periods
-      .filter(p => !p.name.endsWith(" Night") && !p.name.endsWith("Overnight"))
+      .filter(
+        (p) => !p.name.endsWith(" Night") && !p.name.endsWith("Overnight")
+      )
       .slice(0, 6)
-      .map(p => `${p.name}: ${p.detailedForecast}`)
+      .map((p) => `${p.name}: ${p.detailedForecast}`)
       .join("\n")
 
     return {
@@ -28,7 +30,7 @@ export class OpenWeatherMap implements WeatherService {
       sunrise: this.formatTime(current.sys.sunrise, req.timeZone),
       sunset: this.formatTime(current.sys.sunset, req.timeZone),
       temp: current.main.temp.toFixed(0),
-      wind: current.wind.speed.toFixed(0)
+      wind: current.wind.speed.toFixed(0),
     }
   }
 

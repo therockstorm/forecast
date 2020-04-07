@@ -15,7 +15,7 @@ describe("send", () => {
     expect(mock.messages.create).toHaveBeenCalledWith({
       body: msg.body,
       from: msg.phoneFrom,
-      to: msg.phoneTo
+      to: msg.phoneTo,
     })
   })
 })

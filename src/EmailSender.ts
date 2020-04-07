@@ -15,11 +15,11 @@ export class EmailSender implements MessageSender {
           Destination: { ToAddresses: [req.email] },
           Message: {
             Body: { Text: { Data: req.body } },
-            Subject: { Charset: "UTF-8", Data: req.subject }
+            Subject: { Charset: "UTF-8", Data: req.subject },
           },
-          Source: req.email
+          Source: req.email,
         })
         .promise()
-    ).MessageId
+    ).MessageId,
   })
 }

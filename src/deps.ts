@@ -18,8 +18,8 @@ export const init = (): Deps => ({
       new EmailSender(new SES()),
       new SmsSender(
         new Twilio(envVar("TWILIO_ACCOUNT_SID"), envVar("TWILIO_AUTH_TOKEN"))
-      )
-    ]
+      ),
+    ],
   },
   weatherService: new OpenWeatherMap(new Http(axios.create())),
   weather: {
@@ -27,8 +27,8 @@ export const init = (): Deps => ({
     lat: envVar("FORECAST_LAT"),
     lon: envVar("FORECAST_LON"),
     timeZone: envVar("FORECAST_TIMEZONE"),
-    units: "imperial"
-  }
+    units: "imperial",
+  },
 })
 
 // Service interfaces owned by business logic, implemented by plugins

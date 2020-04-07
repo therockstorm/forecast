@@ -14,36 +14,36 @@ class MyStack extends Stack {
       buildSpec: BuildSpec.fromObject({
         phases: {
           build: { commands: ["npm test"] },
-          install: { commands: ["npm ci"], "runtime-versions": { nodejs: 10 } }
+          install: { commands: ["npm ci"], "runtime-versions": { nodejs: 10 } },
         },
-        version: "0.2"
+        version: "0.2",
       }),
       environment: {
         environmentVariables: {
           SKRIPTS_DEPLOYMENT_BUCKET: {
-            value: envVar("SKRIPTS_DEPLOYMENT_BUCKET")
+            value: envVar("SKRIPTS_DEPLOYMENT_BUCKET"),
           },
           FORECAST_EMAIL: { value: envVar("FORECAST_EMAIL") },
           FORECAST_PHONE_NUMBER_FROM: {
-            value: envVar("FORECAST_PHONE_NUMBER_FROM")
+            value: envVar("FORECAST_PHONE_NUMBER_FROM"),
           },
           FORECAST_PHONE_NUMBER_TO: {
-            value: envVar("FORECAST_PHONE_NUMBER_TO")
+            value: envVar("FORECAST_PHONE_NUMBER_TO"),
           },
           FORECAST_LAT: { value: envVar("FORECAST_LAT") },
           FORECAST_LON: { value: envVar("FORECAST_LON") },
           FORECAST_TIMEZONE: { value: envVar("FORECAST_TIMEZONE") },
           OPEN_WEATHER_MAP_API_KEY: {
-            value: envVar("OPEN_WEATHER_MAP_API_KEY")
+            value: envVar("OPEN_WEATHER_MAP_API_KEY"),
           },
           SERVERLESS_ACCESS_KEY: { value: envVar("SERVERLESS_ACCESS_KEY") },
           STAGE: { value: STAGE },
           TWILIO_ACCOUNT_SID: { value: envVar("TWILIO_ACCOUNT_SID") },
-          TWILIO_AUTH_TOKEN: { value: envVar("TWILIO_AUTH_TOKEN") }
-        }
+          TWILIO_AUTH_TOKEN: { value: envVar("TWILIO_AUTH_TOKEN") },
+        },
       },
       source: Source.gitHub({ owner: "therockstorm", repo: name }),
-      timeout: Duration.minutes(5)
+      timeout: Duration.minutes(5),
     })
   }
 }

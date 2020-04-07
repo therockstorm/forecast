@@ -16,9 +16,9 @@ describe("send", () => {
       Destination: { ToAddresses: [msg.email] },
       Message: {
         Body: { Text: { Data: msg.body } },
-        Subject: { Charset: "UTF-8", Data: msg.subject }
+        Subject: { Charset: "UTF-8", Data: msg.subject },
       },
-      Source: msg.email
+      Source: msg.email,
     })
   })
 })

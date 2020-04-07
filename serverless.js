@@ -5,7 +5,7 @@ module.exports = {
   custom: {
     ...serverless.custom,
     alerts: { dashboard: false },
-    deploymentSettings: { stages: ["dev", "prod"] }
+    deploymentSettings: { stages: ["dev", "prod"] },
   },
   app: "forecast",
   functions: {
@@ -14,18 +14,18 @@ module.exports = {
       deploymentSettings: {
         type: "AllAtOnce", // Change for gradual deploy, see https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/automating-updates-to-serverless-apps.html
         alias: "Live",
-        alarms: ["FuncFunctionErrorsAlarm"]
+        alarms: ["FuncFunctionErrorsAlarm"],
       },
       events: [{ schedule: "cron(0 11 * * ? *)" }],
       handler: "src/handler.handle",
-      timeout: 20
-    }
+      timeout: 20,
+    },
   },
   org: "therockstorm",
   plugins: [
     ...serverless.plugins,
     "serverless-plugin-aws-alerts",
-    "serverless-plugin-canary-deployments"
+    "serverless-plugin-canary-deployments",
   ],
   provider: {
     ...serverless.provider,
@@ -39,23 +39,23 @@ module.exports = {
       FORECAST_TIMEZONE: "${env:FORECAST_TIMEZONE}",
       OPEN_WEATHER_MAP_API_KEY: "${env:OPEN_WEATHER_MAP_API_KEY}",
       TWILIO_ACCOUNT_SID: "${env:TWILIO_ACCOUNT_SID}",
-      TWILIO_AUTH_TOKEN: "${env:TWILIO_AUTH_TOKEN}"
+      TWILIO_AUTH_TOKEN: "${env:TWILIO_AUTH_TOKEN}",
     },
     iamRoleStatements: [
       {
         Effect: "Allow",
         Action: "ses:SendEmail",
         Resource:
-          "arn:aws:ses:${self:provider.region}:#{AWS::AccountId}:identity/${env:FORECAST_EMAIL}"
+          "arn:aws:ses:${self:provider.region}:#{AWS::AccountId}:identity/${env:FORECAST_EMAIL}",
       },
       {
         Effect: "Allow",
         Action: "codedeploy:PutLifecycleEventHookExecutionStatus",
         Resource:
-          "arn:aws:codedeploy:${self:provider.region}:#{AWS::AccountId}:deploymentgroup:${self:service.name}-${self:provider.stage}-*"
-      }
+          "arn:aws:codedeploy:${self:provider.region}:#{AWS::AccountId}:deploymentgroup:${self:service.name}-${self:provider.stage}-*",
+      },
     ],
-    tracing: { apiGateway: true, lambda: true }
+    tracing: { apiGateway: true, lambda: true },
   },
-  resources: "${file(./scripts/stack.yml)}"
+  resources: "${file(./scripts/stack.yml)}",
 }
