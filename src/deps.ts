@@ -9,27 +9,33 @@ import { Http } from "./Http"
 import { OpenWeatherMap } from "./OpenWeatherMap"
 import { SmsSender } from "./SmsSender"
 
-export const init = (): Deps => ({
-  messaging: {
-    email: envVar("FORECAST_EMAIL"),
-    phoneFrom: envVar("FORECAST_PHONE_NUMBER_FROM"),
-    phoneTo: envVar("FORECAST_PHONE_NUMBER_TO"),
-    senders: [
-      new EmailSender(new SES()),
-      new SmsSender(
-        new Twilio(envVar("TWILIO_ACCOUNT_SID"), envVar("TWILIO_AUTH_TOKEN"))
-      ),
-    ],
-  },
-  weatherService: new OpenWeatherMap(new Http(axios.create())),
-  weather: {
-    apiKey: envVar("OPEN_WEATHER_MAP_API_KEY"),
-    lat: envVar("FORECAST_LAT"),
-    lon: envVar("FORECAST_LON"),
-    timeZone: envVar("FORECAST_TIMEZONE"),
-    units: "imperial",
-  },
-})
+export const init = (): Deps => {
+  const phoneFrom = process.env.FORECAST_PHONE_NUMBER_FROM
+  const phoneTo = process.env.FORECAST_PHONE_NUMBER_TO
+  const twilioSid = process.env.TWILIO_ACCOUNT_SID
+  const twilioTok = process.env.TWILIO_AUTH_TOKEN
+  const senders: MessageSender[] = [new EmailSender(new SES())]
+  if (phoneFrom && phoneTo && twilioSid && twilioTok) {
+    senders.push(new SmsSender(new Twilio(twilioSid, twilioTok)))
+  }
+
+  return {
+    messaging: {
+      email: envVar("FORECAST_EMAIL"),
+      phoneFrom: phoneFrom || "",
+      phoneTo: phoneTo || "",
+      senders,
+    },
+    weatherService: new OpenWeatherMap(new Http(axios.create())),
+    weather: {
+      apiKey: envVar("OPEN_WEATHER_MAP_API_KEY"),
+      lat: envVar("FORECAST_LAT"),
+      lon: envVar("FORECAST_LON"),
+      timeZone: envVar("FORECAST_TIMEZONE"),
+      units: "imperial",
+    },
+  }
+}
 
 // Service interfaces owned by business logic, implemented by plugins
 export interface MessageSender {
