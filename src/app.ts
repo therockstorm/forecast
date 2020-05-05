@@ -1,4 +1,3 @@
-import { log } from "@therockstorm/utils"
 import "source-map-support/register"
 import { Deps, GetWeatherRes, SendMessageReq, Messaging } from "./deps"
 
@@ -8,7 +7,7 @@ export const run = async (deps: Deps): Promise<void> => {
     deps.messaging
   )
   const res = await Promise.all(deps.messaging.senders.map((s) => s.send(msg)))
-  res.forEach(log)
+  res.forEach((res) => deps.log.info(res.id))
 }
 
 const getMsg = (params: GetWeatherRes, deps: Messaging): SendMessageReq => ({

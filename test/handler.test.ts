@@ -6,6 +6,8 @@ import { getWeatherRes, deps, mocks } from "./fakes"
 
 import { handle } from "../src/handler"
 
+const ctx = { awsRequestId: "" }
+
 describe("handle", () => {
   afterEach(() => {
     resetAllWhenMocks()
@@ -17,9 +19,10 @@ describe("handle", () => {
     when(mocks.weatherService.get)
       .calledWith(deps.weather)
       .mockResolvedValue(getWeatherRes)
-    mocks.senders.forEach((s) => s.send.mockResolvedValue(""))
+    mocks.senders.forEach((s) => s.send.mockResolvedValue({ id: "" }))
+    mocks.log.child.mockReturnValue(mocks.log)
 
-    const res = await handle()
+    const res = await handle({}, ctx)
 
     expect(res).toEqual({ statusCode: 200 })
     expect(mocks.senders[0].send).toHaveBeenCalledWith({
@@ -33,7 +36,7 @@ describe("handle", () => {
   })
 
   it("returns 500 on error", async () => {
-    const res = await handle()
+    const res = await handle({}, ctx)
 
     expect(res).toEqual({ statusCode: 500 })
   })

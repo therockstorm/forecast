@@ -14,16 +14,19 @@
   },
   "dependencies": {
     "@therockstorm/utils": "^3.0.19",
-    "aws-sdk": "^2.658.0",
+    "aws-sdk": "^2.669.0",
     "axios": "^0.19.2",
-    "source-map-support": "^0.5.17",
-    "twilio": "^3.42.2"
+    "pino": "^6.2.1",
+    "source-map-support": "^0.5.19",
+    "twilio": "^3.43.0",
+    "validate": "^5.1.0"
   },
   "devDependencies": {
-    "@aws-cdk/aws-codebuild": "^1.33.1",
-    "@aws-cdk/core": "^1.33.1",
+    "@aws-cdk/aws-codebuild": "^1.36.1",
+    "@aws-cdk/core": "^1.36.1",
     "@types/jest-when": "^2.7.1",
-    "aws-cdk": "^1.33.1",
+    "@types/pino": "^6.0.0",
+    "aws-cdk": "^1.36.1",
     "eslint": "^6.8.0",
     "husky": "^4.2.5",
     "jest-when": "^2.7.1",

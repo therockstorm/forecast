@@ -1,5 +1,6 @@
 /* istanbul ignore file */
 import { envVar } from "@therockstorm/utils"
+import pino, { Logger } from "pino"
 import SES from "aws-sdk/clients/ses"
 import axios from "axios"
 import "source-map-support/register"
@@ -20,6 +21,17 @@ export const init = (): Deps => {
   }
 
   return {
+    log: pino({
+      base: {
+        memorySize: process.env.AWS_LAMBDA_FUNCTION_MEMORY_SIZE,
+        region: process.env.AWS_REGION,
+        runtime: process.env.AWS_EXECUTION_ENV,
+        version: process.env.AWS_LAMBDA_FUNCTION_VERSION,
+      },
+      name: process.env.AWS_LAMBDA_FUNCTION_NAME,
+      level: process.env.LOG_LEVEL || "info",
+      useLevelLabels: true,
+    }),
     messaging: {
       email: envVar("FORECAST_EMAIL"),
       phoneFrom: phoneFrom || "",
@@ -88,6 +100,7 @@ export interface Messaging {
 }
 
 export interface Deps {
+  log: Logger
   messaging: Messaging
   weather: GetWeatherReq
   weatherService: WeatherService

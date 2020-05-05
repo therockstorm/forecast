@@ -1,3 +1,4 @@
+import { Logger } from "pino"
 import {
   Deps,
   GetWeatherReq,
@@ -16,11 +17,17 @@ export const msg = {
 }
 
 export const mocks = {
+  log: {
+    error: jest.fn(),
+    info: jest.fn(),
+    child: jest.fn(),
+  },
   senders: [{ send: jest.fn() }],
   weatherService: { get: jest.fn() },
 }
 
 export const deps: Deps = {
+  log: (mocks.log as unknown) as Logger,
   messaging: {
     email: "my-email",
     phoneFrom: "my-phoneFrom",
